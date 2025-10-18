@@ -1,16 +1,12 @@
-Here's a clean, professional **`README.md`** for your GitHub repository that explains your backup and sync approach on your Ubuntu server:
-
----
-
 # 🔄 Project Auto-Backup & Sync System
 
 This project is configured to **automatically back up** to GitHub daily and supports **manual synchronization** for flexible workflow management.
 
 ## 📦 Overview
 
-- ✅ **Daily automatic backup**: All local changes are committed and pushed to GitHub every day at **11:59 PM**.
-- 🖐️ **Manual sync options**: Easily push or pull changes on demand via simple terminal commands.
-- 🔒 **Secure authentication**: Uses GitHub Personal Access Token (PAT) for safe, passwordless Git operations.
+- **Daily automatic backup**: All local changes are committed and pushed to GitHub every day at **11:59 PM**. Note that the time is in local time. In my case, it is in `Colombo/Asia` time. 
+- **Manual sync options**: Easily push or pull changes on demand via simple terminal commands.
+- **Secure authentication**: Uses GitHub Personal Access Token (PAT) for safe, passwordless Git operations.
 
 Designed for developers and sysadmins who want reliable, low-effort version control on headless servers.
 
@@ -18,15 +14,27 @@ Designed for developers and sysadmins who want reliable, low-effort version cont
 
 ## ⚙️ Setup on Ubuntu Server
 
-### 1. **Initialize Git Repository**
+### 1. **Install Git**
+```bash
+sudo apt update && sudo apt install git -y
+```
+
+### 2. **Initialize Git Repository**
 ```bash
 cd /path/to/your/project
 git init
 git remote add origin https://github.com/your-username/your-repo.git
 ```
 
-### 2. **Authenticate with GitHub**
+### 3. **Authenticate with GitHub**
+
 - Create a [Personal Access Token (PAT)](https://github.com/settings/tokens) with `repo` scope.
+  - Go to **GitHub → Settings → Developer settings → Personal Access Tokens → Tokens (classic)**
+  - Click Generate new token (classic)
+  - Give it a name (e.g., `ubuntu-server-backup`)
+  - Select scopes: at least `repo` (for private repos) or `public_repo` (for public)
+  - Copy the token (you won’t see it again!)
+
 - Configure Git to store credentials:
   ```bash
   git config --global credential.helper store
